@@ -44,11 +44,17 @@ module.exports.routes = {
   //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
-  'POST /signup': 'UserController.signup',
-  'POST /login': 'UserController.login',
+  'POST /connect': 'UserController.connect',
   'GET /isAuthenticated': 'UserController.isAuthenticated',
 
-  'POST /registerDevice': 'DeviceController.registerDevice'
+  'POST /registerDevice': 'DeviceController.registerDevice',
+  'GET /device': 'DeviceController.getAllDevices',
+  'DELETE /device/:id': 'DeviceController.deleteDevice',
+
+  'GET /fragments': 'FragmentController.getAllFragments',
+  'PUT /fragments/:id': 'FragmentController.updateFragment',
+  'POST /fragments': 'FragmentController.createFragment',
+  'DELETE /fragments/:id': 'FragmentController.removeFragment'
 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

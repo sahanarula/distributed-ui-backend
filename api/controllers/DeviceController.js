@@ -6,25 +6,16 @@
  */
 
 module.exports = {
-
-  registerDevice: async (req, res) => {
-    var deviceType = req.param('deviceType');
-
-    Device.create({
-      type: deviceType,
-      owner: req.user.id
-    }, function (err, registeredDevice) {
-      if (err) {
-        console.log(err);
-        return res.send(500);
-      }
-      res.json(registeredDevice);
-    });
+  getAllDevices: async (req, res) => {
+    const allDevices = await Device.find({ owner: req.user.id }).populate('owner');
+    res.json(allDevices);
   },
 
-  // connect: async (req, res) => {
-  //   var deviceType = req.param()
-  // }
-
+  deleteDevice: async (req, res) => {
+    console.log(req.param("id"));
+    const deletedDevices = await Device.destroy({ owner: req.user.id, id: req.param("id") }).fetch();
+    console.log(deletedDevices);
+    deletedDevices ? res.json(deletedDevices) : res.status(402).message({ code: "NOT_DELETED" });
+  }
 };
 

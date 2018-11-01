@@ -25,6 +25,10 @@ module.exports.policies = {
 
   DeviceController: {
     '*': 'isAuthenticated'
+  },
+
+  FragmentController: {
+    '*': 'isAuthenticated'
   }
 
 };

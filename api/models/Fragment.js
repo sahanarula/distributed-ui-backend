@@ -1,5 +1,5 @@
 /**
- * User.js
+ * Fragment.js
  *
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -23,37 +23,20 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    email: {
-      required: true,
-      type: 'string',
-      unique: true
-    },
-
-    password: {
+    name: {
       required: true,
       type: 'string'
     },
 
-    devices: {
-      collection: 'device',
-      via: 'owner'
+    url: {
+      required: true,
+      type: 'string'
     },
 
-    fragments: {
-      collection: 'fragment',
-      via: 'owner'
+    owner: {
+      model: 'user'
     }
-
   },
-
-  beforeCreate: function (valuesToSet, proceed) {
-    // Hash Password
-    sails.helpers.passwordHash(valuesToSet.password).exec((err, hashedPassword)=>{
-      if (err) { return proceed(err); }
-      valuesToSet.password = hashedPassword;
-      return proceed();
-    });
-  }
 
 };
 
