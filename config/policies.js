@@ -29,6 +29,10 @@ module.exports.policies = {
 
   FragmentController: {
     '*': 'isAuthenticated'
+  },
+
+  LocationController: {
+    '*': 'isAuthenticated'
   }
 
 };

@@ -54,8 +54,14 @@ module.exports.routes = {
   'GET /fragments': 'FragmentController.getAllFragments',
   'PUT /fragments/:id': 'FragmentController.updateFragment',
   'POST /fragments': 'FragmentController.createFragment',
-  'DELETE /fragments/:id': 'FragmentController.removeFragment'
+  'DELETE /fragments/:id': 'FragmentController.removeFragment',
 
+  'GET /locations': 'LocationController.getAllLocations',
+  'PUT /locations/:id': 'LocationController.updateLocation',
+  'POST /locations': 'LocationController.createLocation',
+  'DELETE /locations/:id': 'LocationController.removeLocation',
+
+  'POST /configurations': 'ConfigurationController.createConfiguration',
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗

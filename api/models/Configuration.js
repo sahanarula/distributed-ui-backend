@@ -1,5 +1,5 @@
 /**
- * User.js
+ * Configuration.js
  *
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -23,47 +23,25 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    email: {
-      required: true,
-      type: 'string',
-      unique: true
-    },
-
-    password: {
+    deviceType: {
       required: true,
       type: 'string'
     },
 
-    devices: {
-      collection: 'device',
-      via: 'owner'
+    config: {
+      required: true,
+      type: 'json'
     },
 
-    fragments: {
-      collection: 'fragment',
-      via: 'owner'
+    owner: {
+      model: 'user'
     },
 
-    locations: {
-      collection: 'fragment',
-      via: 'owner'
-    },
-
-    configurations: {
-      collection: 'configuration',
-      via: 'owner'
+    location: {
+      model: 'location'
     }
 
   },
-
-  beforeCreate: function (valuesToSet, proceed) {
-    // Hash Password
-    sails.helpers.passwordHash(valuesToSet.password).exec((err, hashedPassword)=>{
-      if (err) { return proceed(err); }
-      valuesToSet.password = hashedPassword;
-      return proceed();
-    });
-  }
 
 };
 
