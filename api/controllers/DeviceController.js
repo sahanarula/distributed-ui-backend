@@ -15,7 +15,7 @@ module.exports = {
     console.log(req.param("id"));
     const deletedDevices = await Device.destroy({ owner: req.user.id, id: req.param("id") }).fetch();
     console.log(deletedDevices);
-    deletedDevices ? res.json(deletedDevices) : res.status(402).message({ code: "NOT_DELETED" });
+    deletedDevices ? res.json(deletedDevices) : res.status(402).json({ code: "NOT_DELETED" });
   }
 };
 

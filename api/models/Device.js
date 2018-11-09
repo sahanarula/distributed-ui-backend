@@ -28,6 +28,11 @@ module.exports = {
       type: 'string'
     },
 
+    configurations: {
+      collection: "configuration",
+      via: "device"
+    },
+
     owner: {
       model: 'user'
     }

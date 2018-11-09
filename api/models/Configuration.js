@@ -23,12 +23,11 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    deviceType: {
-      required: true,
-      type: 'string'
+    device: {
+      model: 'device'
     },
 
-    config: {
+    configuration: {
       required: true,
       type: 'json'
     },

@@ -28,8 +28,18 @@ module.exports = {
       type: 'string'
     },
 
+    isDefault: {
+      type: "boolean",
+      defaultsTo: false
+    },
+
     owner: {
       model: 'user'
+    },
+
+    configurations: {
+      collection: 'configuration',
+      via: 'location'
     }
   },
 

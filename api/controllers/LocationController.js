@@ -7,7 +7,14 @@
 
 module.exports = {
   getAllLocations: async (req, res) => {
-    const allLocations = await Location.find({ owner: req.user.id }).populate('owner');
+    let allLocations = await Location.find({ owner: req.user.id }).populate('owner');
+    allLocations = await Promise.all(allLocations.map(async location => {
+      const configurations = await Configuration.find({ owner: req.user.id, location: location.id }).populate('device');
+      return {
+        ...location,
+        configurations
+      };
+    }));
     res.json(allLocations);
   },
   updateLocation: async (req, res) => {
@@ -20,8 +27,9 @@ module.exports = {
   },
   removeLocation: async (req, res) => {
     const deletedLocations = await Location.destroy({ owner: req.user.id, id: req.param("id") }).fetch();
+    Configuration.destroy({ owner: req.user.id, location: deletedLocations[0].id });
     console.log(deletedLocations);
-    deletedLocations ? res.json(deletedLocations) : res.status(402).message({ code: "NOT_DELETED" });
+    deletedLocations ? res.json(deletedLocations) : res.status(402).json({ code: "NOT_DELETED" });
   }
 };
 

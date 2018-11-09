@@ -21,7 +21,7 @@ module.exports = {
   removeFragment: async (req, res) => {
     const deletedFragments = await Fragment.destroy({ owner: req.user.id, id: req.param("id") }).fetch();
     console.log(deletedFragments);
-    deletedFragments ? res.json(deletedFragments) : res.status(402).message({ code: "NOT_DELETED" });
+    deletedFragments ? res.json(deletedFragments) : res.status(402).json({ code: "NOT_DELETED" });
   }
 };
 

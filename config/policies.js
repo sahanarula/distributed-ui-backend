@@ -33,6 +33,10 @@ module.exports.policies = {
 
   LocationController: {
     '*': 'isAuthenticated'
+  },
+
+  ConfigurationController: {
+    '*': 'isAuthenticated'
   }
 
 };
