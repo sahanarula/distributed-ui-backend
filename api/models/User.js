@@ -39,6 +39,10 @@ module.exports = {
       via: 'owner'
     },
 
+    proximity: {
+      model: 'location'
+    },
+
     fragments: {
       collection: 'fragment',
       via: 'owner'

@@ -20,7 +20,9 @@ module.exports.policies = {
   // '*': true,
 
   UserController: {
-    'isAuthenticated': 'isAuthenticated'
+    'isAuthenticated': 'isAuthenticated',
+    'getProximity': 'isAuthenticated',
+    'setProximity': 'isAuthenticated'
   },
 
   DeviceController: {

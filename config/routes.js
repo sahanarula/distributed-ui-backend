@@ -46,6 +46,8 @@ module.exports.routes = {
 
   'POST /connect': 'UserController.connect',
   'GET /isAuthenticated': 'UserController.isAuthenticated',
+  'GET /proximity': 'UserController.getProximity',
+  'PUT /proximity': 'UserController.setProximity',
 
   'POST /registerDevice': 'DeviceController.registerDevice',
   'GET /device': 'DeviceController.getAllDevices',

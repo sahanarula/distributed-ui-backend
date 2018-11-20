@@ -13,7 +13,14 @@ module.exports = {
 
   connect: async (req, res) => {
     const { email, password, device: type } = req.body;
-    const createdUser = await User.findOrCreate({ email }, { email, password });
+    var createdUser = await User.findOrCreate({ email }, { email, password });
+    var defaultProximity = createdUser.proximity;
+    console.log(defaultProximity);
+    if (!defaultProximity) {
+      var createdLocation = await Location.create({ name: "Default", isDefault: true, configurations: [], owner: createdUser.id }).fetch();
+    }
+    defaultProximity = defaultProximity || createdLocation.id;
+    await User.update({ id: createdUser.id }, { proximity: defaultProximity });
     const isPasswordMatched = await bcrypt.compare(password, createdUser.password);
     if (!isPasswordMatched) {
       res.status(401).json({code: "WRONG_CREDENTIALS"})
@@ -24,17 +31,38 @@ module.exports = {
     return res.json({token});
   },
 
-  // login: async function (req, res) {
-  //   var foundUser = await User.findOne({ email: req.param('email') });
-  //   var isPasswordMatched = await bcrypt.compare(req.param('password'), foundUser.password);
-  //   if (isPasswordMatched) {
-  //     var token = jwt.sign({user: foundUser.id}, sails.config.custom.jwtSecret, {expiresIn: sails.config.custom.jwtExpires});
-  //     return res.ok(token);
-  //   }
-  // },
-
   isAuthenticated: async function (req, res) {
     res.ok();
+  },
+
+  getProximity: async function (req, res) {
+    console.log("getting proximity now");
+    if (!req.isSocket && !req.param("override")) {
+      return res.badRequest('Only a client socket can subscribe to proximity.  But you look like an HTTP request to me.');
+    }
+
+    User.findOne({ id: req.user.id }).exec(async function(err, currentUser){
+      if (err) {
+        console.log("found an error");
+        return res.serverError(err);
+      }
+
+      // Now we'll subscribe our client socket to each of these records.
+      await User.subscribe(req, [currentUser.id]);
+
+      var proximity = await Location.findOne({ owner: currentUser.id, id: currentUser.proximity });
+      return res.json(proximity);
+    });
+  },
+
+  setProximity: async function (req, res) {
+    var foundLocation = await Location.findOne({ owner: req.user.id, name: req.body.location });
+    var updatedProximityUser = await User.update({ id: req.user.id }, { proximity: foundLocation.id }).fetch();
+    User.publish([req.user.id], {
+      verb: "updated",
+      data: updatedProximityUser[0]  
+    });
+    res.json(updatedProximityUser);
   }
 
 };
