@@ -14,13 +14,8 @@ module.exports = {
   connect: async (req, res) => {
     const { email, password, device: type } = req.body;
     var createdUser = await User.findOrCreate({ email }, { email, password });
-    var defaultProximity = createdUser.proximity;
-    console.log(defaultProximity);
-    if (!defaultProximity) {
-      var createdLocation = await Location.create({ name: "Default", isDefault: true, configurations: [], owner: createdUser.id }).fetch();
-    }
-    defaultProximity = defaultProximity || createdLocation.id;
-    await User.update({ id: createdUser.id }, { proximity: defaultProximity });
+    var createdLocation = await Location.findOrCreate({ name: "Default", owner: createdUser.id }, { name: "Default", isDefault: true, configurations: [], owner: createdUser.id });
+    await User.update({ id: createdUser.id }, { proximity: createdLocation.id });
     const isPasswordMatched = await bcrypt.compare(password, createdUser.password);
     if (!isPasswordMatched) {
       res.status(401).json({code: "WRONG_CREDENTIALS"})
@@ -60,9 +55,9 @@ module.exports = {
     var updatedProximityUser = await User.update({ id: req.user.id }, { proximity: foundLocation.id }).fetch();
     User.publish([req.user.id], {
       verb: "updated",
-      data: updatedProximityUser[0]  
+      data: foundLocation
     });
-    res.json(updatedProximityUser);
+    res.json(foundLocation);
   }
 
 };
