@@ -150,7 +150,8 @@ module.exports = {
     cors: {
       allowOrigins: [
         'http://localhost:3000',
-        'https://dui-frontend.herokuapp.com'
+        'https://dui-frontend.herokuapp.com',
+        "https://dui-backend.herokuapp.com"
       ]
     },
 
@@ -253,7 +254,8 @@ module.exports = {
     ***************************************************************************/
     onlyAllowOrigins: [
       'http://localhost:3000',
-      'https://dui-frontend.herokuapp.com'
+      'https://dui-frontend.herokuapp.com',
+      "https://dui-backend.herokuapp.com"
     ],
 
 
