@@ -148,9 +148,10 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cors: {
-      // allowOrigins: [
-      //   'https://example.com',
-      // ]
+      allowOrigins: [
+        'http://localhost:3000',
+        'https://dui-frontend.herokuapp.com'
+      ]
     },
 
   },
